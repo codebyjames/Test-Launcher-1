@@ -1,6 +1,7 @@
 package com.loboda.james.testlauncher1
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
@@ -10,8 +11,10 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.loboda.james.testlauncher1.adapters.AppDrawerAdapter
+import com.loboda.james.testlauncher1.broadcasts.RedBroadcast
 import com.loboda.james.testlauncher1.databinding.ActivityMainBinding
 import com.loboda.james.testlauncher1.models.PackageItem
+import com.loboda.james.testlauncher1.widgets.TAG_ONCLICK_RED
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,8 +39,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // test widget broadcast
+        testWidgetBroadcastOnClick()
+
         // launch default app
-        launchDefaultApp()
+//        launchDefaultApp()
 
         // set app drawer
         appDrawerAdapter = AppDrawerAdapter { packageItem ->
@@ -68,11 +74,25 @@ class MainActivity : AppCompatActivity() {
                 launchSettings()
             }
 
+            // launch pick launcher
+            buttonPickLauncher.setOnClickListener {
+                launchPickLauncherSettings()
+            }
+
             // set recycler
             appDrawer.adapter = appDrawerAdapter
 
         }
 
+    }
+
+    /**
+     * Use this broadcast to test pending broadcast in widget
+     */
+    private fun testWidgetBroadcastOnClick() {
+        val broadcast = RedBroadcast()
+        IntentFilter(TAG_ONCLICK_RED).also {
+            registerReceiver(broadcast, it) }
     }
 
     private fun launchSettings() {
