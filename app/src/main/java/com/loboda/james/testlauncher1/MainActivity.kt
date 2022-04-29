@@ -1,9 +1,11 @@
 package com.loboda.james.testlauncher1
 
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -61,11 +63,27 @@ class MainActivity : AppCompatActivity() {
                 launchChrome()
             }
 
+            // launch Settings
+            buttonSettings.setOnClickListener {
+                launchSettings()
+            }
+
             // set recycler
             appDrawer.adapter = appDrawerAdapter
 
         }
 
+    }
+
+    private fun launchSettings() {
+        // Android version > Lollipop
+        val settingsIntent = Intent(Settings.ACTION_SETTINGS)
+        startActivity(settingsIntent)
+    }
+
+    private fun launchPickLauncherSettings() {
+        val settingsIntent = Intent(Settings.ACTION_HOME_SETTINGS)
+        startActivity(settingsIntent)
     }
 
     /**
