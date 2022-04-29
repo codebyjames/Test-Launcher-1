@@ -9,10 +9,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
 import android.widget.RemoteViews
 import com.loboda.james.testlauncher1.MainActivity
 import com.loboda.james.testlauncher1.R
+import kotlin.random.Random
 
 /**
  * Implementation of App Widget functionality.
@@ -30,6 +32,18 @@ class RandomWidget : AppWidgetProvider() {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
 
+    }
+
+    override fun onAppWidgetOptionsChanged(
+        context: Context?,
+        appWidgetManager: AppWidgetManager?,
+        appWidgetId: Int,
+        newOptions: Bundle?
+    ) {
+        if (context != null && appWidgetManager != null) {
+            updateAppWidget(context, appWidgetManager, appWidgetId)
+        }
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
     }
 
     override fun onEnabled(context: Context) {
@@ -74,7 +88,7 @@ internal fun updateAppWidget(
     val widgetText = context.getString(R.string.appwidget_text)
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.random_widget)
-//    views.setTextViewText(R.id.appwidget_text, widgetText)
+    views.setTextViewText(R.id.appwidget_text, "$widgetText : ${(0..1000).random()}")
 
     // clicks
     views.setOnClickPendingIntent(R.id.buttonChangeText, createOnClickPendingIntentActivity(context))
