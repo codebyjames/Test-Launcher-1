@@ -49,7 +49,7 @@ class RandomWidget : AppWidgetProvider() {
         else if (intent?.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
 
             /** sent broadcast from RedBroadcast to here to update widget **/
-            val color = intent.getIntExtra("ColorType", Color.BLUE)
+            val color = intent.getIntExtra("ColorType", Color.WHITE)
 
             if (context != null) {
                 val appWidgetManager = AppWidgetManager.getInstance(context)

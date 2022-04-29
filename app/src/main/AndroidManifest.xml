@@ -35,7 +35,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <!-- can also remove HOME if want to use widgets without this app being HOME LAUNCHER -->
                 <category android:name="android.intent.category.HOME" />
                 <!-- In order to receive implicit intents, you must include the CATEGORY_DEFAULT category in the intent filter. -->
                 <category android:name="android.intent.category.DEFAULT" />
