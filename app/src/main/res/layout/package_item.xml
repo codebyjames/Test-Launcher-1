@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/appId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="100"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textSize="20sp"
+        tools:text="app name"
+        android:padding="10dp"/>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/appPackageName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        tools:text="package name"
+        android:padding="10dp"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/appIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        app:shapeAppearanceOverlay="@style/styleRoundedImageView"
+        tools:srcCompat="@drawable/ic_launcher_foreground"
+        android:layout_margin="10dp"/>
+
+</LinearLayout>

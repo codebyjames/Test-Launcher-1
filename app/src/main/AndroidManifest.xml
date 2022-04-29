@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.loboda.james.testlauncher1">
+
+    <uses-permission android:name="android.permission.queries"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+<!--    <queries>-->
+<!--        <package android:name="com.loboda.james.ideageneratoreye"/>-->
+<!--        <package android:name="com.android.chrome"/>-->
+<!--    </queries>-->
 
     <application
         android:allowBackup="true"
@@ -14,7 +23,9 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.HOME" />
+                <!-- In order to receive implicit intents, you must include the CATEGORY_DEFAULT category in the intent filter.  -->
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
