@@ -1,26 +1,29 @@
 package com.loboda.james.testlauncher1.widgets
 
-import android.app.Activity
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.RemoteViews
 import com.loboda.james.testlauncher1.MainActivity
 import com.loboda.james.testlauncher1.R
-import kotlin.random.Random
+
+/**
+ * @author James Loboda aka papayev
+ * created by James Loboda aka papayev at 4/27/22
+ * www.papayev.com
+ */
 
 /**
  * Implementation of App Widget functionality.
  */
 
-const val TAG_ONCLICK_RED = "com.loboda.james.click.red"
+const val ACTION_ONCLICK_COLOR = "com.loboda.james.click.ACTION_COLOR"
 //const val TAG_ONCLICK_DUMMY = "com.loboda.james.click.DUMMY"
 class RandomWidget : AppWidgetProvider() {
     override fun onUpdate(
@@ -35,6 +38,9 @@ class RandomWidget : AppWidgetProvider() {
 
     }
 
+    /**
+     * When widget size is changed: update
+     */
     override fun onAppWidgetOptionsChanged(
         context: Context?,
         appWidgetManager: AppWidgetManager?,
@@ -58,12 +64,12 @@ class RandomWidget : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         Log.d("Stuff", "action: ${intent?.action}")
-        if (TAG_ONCLICK_RED == intent?.action) {
+        if (ACTION_ONCLICK_COLOR == intent?.action) {
             Log.d("Stuff", "received action: ${intent?.action}")
         }
         else if (intent?.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
 
-            /** sent broadcast from RedBroadcast to here to update widget **/
+            /** sent broadcast from ColorBroadcast to here to update widget **/
             val color = intent.getIntExtra("ColorType", Color.WHITE)
 
             if (context != null) {
@@ -93,7 +99,7 @@ internal fun updateAppWidget(
 
     // clicks
     views.setOnClickPendingIntent(R.id.buttonChangeText, createOnClickPendingIntentActivity(context))
-    views.setOnClickPendingIntent(R.id.buttonChangeColor, createOnClickPendingIntentBroadcast(context, TAG_ONCLICK_RED))
+    views.setOnClickPendingIntent(R.id.buttonChangeColor, createOnClickPendingIntentBroadcast(context, ACTION_ONCLICK_COLOR))
 
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)

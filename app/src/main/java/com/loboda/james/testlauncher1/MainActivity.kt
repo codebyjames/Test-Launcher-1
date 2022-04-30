@@ -1,8 +1,5 @@
 package com.loboda.james.testlauncher1
 
-import android.app.WallpaperManager
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
@@ -14,30 +11,38 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.loboda.james.testlauncher1.adapters.AppDrawerAdapter
-import com.loboda.james.testlauncher1.broadcasts.RedBroadcast
+import com.loboda.james.testlauncher1.broadcasts.ColorBroadcast
 import com.loboda.james.testlauncher1.databinding.ActivityMainBinding
 import com.loboda.james.testlauncher1.models.PackageItem
-import com.loboda.james.testlauncher1.widgets.TAG_ONCLICK_RED
+import com.loboda.james.testlauncher1.widgets.ACTION_ONCLICK_COLOR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.coroutineContext
 
+/**
+ * @author James Loboda aka papayev
+ * created by James Loboda aka papayev at 4/27/22
+ * www.papayev.com
+ */
+
 
 const val CHROME_PACKAGE = "com.android.chrome"
+
+// this is just an app of mine
 const val IDEA_PACKAGE = "com.loboda.james.ideageneratoreye"
 class MainActivity : AppCompatActivity() {
 
     /**
      * Note: In order to receive implicit intents, you must include the CATEGORY_DEFAULT category
-     * in the intent filter. The methods startActivity() and startActivityForResult() treat all
+     * in the intent filter [AndroidManifest]. The methods startActivity() and startActivityForResult() treat all
      * intents as if they declared the CATEGORY_DEFAULT category. If you do not declare it in your
      * intent filter, no implicit intents will resolve to your activity.
      */
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var appDrawerAdapter: AppDrawerAdapter
-    private lateinit var broadcast: RedBroadcast
+    private lateinit var broadcast: ColorBroadcast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +50,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // test widget broadcast
-        testWidgetBroadcastOnClick()
+        setWidgetBroadcastOnClick()
 
+        /** IF WANT TO LAUNCH AN APP BY DEFAULT ON CREATE **/
         // launch default app
 //        launchDefaultApp()
 
@@ -102,11 +108,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Use this broadcast to test pending broadcast in widget
+     * Use this broadcast with pending broadcast in widget [RandomWidget]
      */
-    private fun testWidgetBroadcastOnClick() {
-        val broadcast = RedBroadcast()
-        IntentFilter(TAG_ONCLICK_RED).also {
+    private fun setWidgetBroadcastOnClick() {
+        val broadcast = ColorBroadcast()
+        IntentFilter(ACTION_ONCLICK_COLOR).also {
             registerReceiver(broadcast, it) }
     }
 

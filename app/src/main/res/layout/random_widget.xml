@@ -19,7 +19,7 @@
         android:layout_alignParentRight="true">
 
         <Button
-            android:text="Hello"
+            android:text="Open"
             android:id="@+id/buttonChangeText"
             android:backgroundTint="@android:color/holo_green_light"
             android:layout_width="0dp"
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"/>
 
         <Button
-            android:text="Red"
+            android:text="Color"
             android:backgroundTint="@android:color/holo_red_light"
             android:id="@+id/buttonChangeColor"
             android:layout_width="0dp"
