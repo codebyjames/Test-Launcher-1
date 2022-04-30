@@ -25,14 +25,16 @@ import android.util.Log
  */
 class ColorBroadcast: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("Stuff", "received action in red broadcast")
+        Log.d("Stuff", "received action in Color Broadcast")
 
         // send broadcast to widget
 //        val intent = Intent(p0, RandomWidget::class.java)
-        val intent = Intent()
-        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        intent.putExtra("ColorType", randomColor())
-        context?.sendBroadcast(intent)
+        Intent().also {
+            intent?.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            intent?.putExtra("ColorType", randomColor())
+            context?.sendBroadcast(intent)
+        }
+
     }
 
     private fun randomColor(): Int {

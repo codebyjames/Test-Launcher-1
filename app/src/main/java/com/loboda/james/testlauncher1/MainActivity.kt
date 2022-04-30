@@ -17,6 +17,7 @@ import com.loboda.james.testlauncher1.adapters.AppDrawerAdapter
 import com.loboda.james.testlauncher1.broadcasts.ColorBroadcast
 import com.loboda.james.testlauncher1.databinding.ActivityMainBinding
 import com.loboda.james.testlauncher1.models.PackageItem
+import com.loboda.james.testlauncher1.widgets.ACTION_DUMMY
 import com.loboda.james.testlauncher1.widgets.ACTION_ONCLICK_COLOR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -123,7 +124,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun launchSettings() {
-        // Android version > Lollipop
         val settingsIntent = Intent(Settings.ACTION_SETTINGS)
         startActivity(settingsIntent)
     }
@@ -149,8 +149,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun launchPickWallpaper(startForResult: ActivityResultLauncher<Intent>) {
-//        val wallpaperIntent = Intent(Intent.ACTION_SET_WALLPAPER)
-//        startActivity(wallpaperIntent)
 
         Intent(Intent.ACTION_GET_CONTENT).also {
             it.type = "image/*"
@@ -189,9 +187,9 @@ class MainActivity : AppCompatActivity() {
         packageManager.getInstalledApplications(PackageManager.GET_META_DATA).forEach { appInfo ->
 
             if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM === ApplicationInfo.FLAG_SYSTEM) {
-                Log.d("Stuff", "system app")
+//                Log.d("Stuff", "system app")
             } else {
-                Log.d("Stuff", "non system app")
+//                Log.d("Stuff", "non system app")
                 list.add(PackageItem(appInfo.packageName, appInfo.icon,
                     appInfo.loadIcon(packageManager), appInfo.uid,
                     appInfo.loadLabel(packageManager).toString()))

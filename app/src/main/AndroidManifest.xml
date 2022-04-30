@@ -24,9 +24,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-
-                <!-- custom action -->
-<!--                <action android:name="com.loboda.james.click.ACTION_COLOR" />-->
             </intent-filter>
 
             <meta-data

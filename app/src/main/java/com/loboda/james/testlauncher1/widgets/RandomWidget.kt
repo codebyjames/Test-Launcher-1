@@ -24,7 +24,6 @@ import com.loboda.james.testlauncher1.R
  */
 
 const val ACTION_ONCLICK_COLOR = "com.loboda.james.click.ACTION_COLOR"
-//const val TAG_ONCLICK_DUMMY = "com.loboda.james.click.DUMMY"
 class RandomWidget : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
@@ -62,16 +61,11 @@ class RandomWidget : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        // receiving broadcast: AppWidgetManager.ACTION_APPWIDGET_UPDATE
         super.onReceive(context, intent)
-        Log.d("Stuff", "action: ${intent?.action}")
-        if (ACTION_ONCLICK_COLOR == intent?.action) {
-            Log.d("Stuff", "received action: ${intent?.action}")
-        }
-        else if (intent?.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE) {
 
-            /** sent broadcast from ColorBroadcast to here to update widget **/
-            val color = intent.getIntExtra("ColorType", Color.WHITE)
-
+        /** sent broadcast from ColorBroadcast to here to update widget **/
+        intent?.getIntExtra("ColorType", Color.WHITE)?.let { color ->
             if (context != null) {
                 val appWidgetManager = AppWidgetManager.getInstance(context)
                 val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, RandomWidget::class.java))
@@ -82,7 +76,6 @@ class RandomWidget : AppWidgetProvider() {
                     appWidgetManager.updateAppWidget(appWidgetId, views)
                 }
             }
-
         }
     }
 }
