@@ -1,5 +1,8 @@
 package com.loboda.james.testlauncher1
 
+import android.app.WallpaperManager
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
@@ -19,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.coroutineContext
+
 
 const val CHROME_PACKAGE = "com.android.chrome"
 const val IDEA_PACKAGE = "com.loboda.james.ideageneratoreye"
@@ -80,6 +84,11 @@ class MainActivity : AppCompatActivity() {
                 launchPickLauncherSettings()
             }
 
+            // launch pick wallpaper
+            buttonPickWallpaper.setOnClickListener {
+                launchPickWallpaper()
+            }
+
             // set recycler
             appDrawer.adapter = appDrawerAdapter
 
@@ -110,6 +119,11 @@ class MainActivity : AppCompatActivity() {
     private fun launchPickLauncherSettings() {
         val settingsIntent = Intent(Settings.ACTION_HOME_SETTINGS)
         startActivity(settingsIntent)
+    }
+
+    private fun launchPickWallpaper() {
+        val widgetsIntent = Intent(Intent.ACTION_SET_WALLPAPER)
+        startActivity(widgetsIntent)
     }
 
     /**
