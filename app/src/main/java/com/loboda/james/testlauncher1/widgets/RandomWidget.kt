@@ -21,6 +21,7 @@ import kotlin.random.Random
  */
 
 const val TAG_ONCLICK_RED = "com.loboda.james.click.red"
+//const val TAG_ONCLICK_DUMMY = "com.loboda.james.click.DUMMY"
 class RandomWidget : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
@@ -102,11 +103,11 @@ private fun createOnClickPendingIntentBroadcast(context: Context, action: String
 //    val intent = Intent(context, RandomWidget::class.java)
 //    intent.action = action
     val intent = Intent(action)
-    return PendingIntent.getBroadcast(context, 0, intent, 0)
+    return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 }
 
 private fun createOnClickPendingIntentActivity(context: Context): PendingIntent {
     val intent = Intent(context, MainActivity::class.java)
-    return PendingIntent.getActivity(context, 0, intent, 0)
+    return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 }
 

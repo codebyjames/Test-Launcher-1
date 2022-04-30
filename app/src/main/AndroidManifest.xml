@@ -23,6 +23,7 @@
 
                 <!-- custom action -->
 <!--                <action android:name="com.loboda.james.click.red" />-->
+<!--                <action android:name="com.loboda.james.click.DUMMY" />-->
             </intent-filter>
 
             <meta-data

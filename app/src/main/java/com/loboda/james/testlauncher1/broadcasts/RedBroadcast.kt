@@ -23,9 +23,15 @@ class RedBroadcast: BroadcastReceiver() {
         Log.d("Stuff", "received action in red broadcast")
 
         // send broadcast to widget
-        val intent = Intent(p0, RandomWidget::class.java)
+//        val intent = Intent(p0, RandomWidget::class.java)
+        val intent = Intent()
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        intent.putExtra("ColorType", Color.RED)
+        intent.putExtra("ColorType", randomColor())
         p0?.sendBroadcast(intent)
     }
+
+    private fun randomColor(): Int {
+        return listOf<Int>(Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN).random()
+    }
+
 }
