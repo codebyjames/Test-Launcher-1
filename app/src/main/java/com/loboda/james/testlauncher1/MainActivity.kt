@@ -1,5 +1,6 @@
 package com.loboda.james.testlauncher1
 
+import android.app.Activity
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
@@ -8,6 +9,8 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.loboda.james.testlauncher1.adapters.AppDrawerAdapter
@@ -67,6 +70,9 @@ class MainActivity : AppCompatActivity() {
             appDrawerAdapter.submitList(appDrawerList())
         }
 
+        // wallpaper start for result
+        val wallpaperResultLauncher = wallPaperStartForResult()
+
         binding.apply {
 
             // set chrome icon
@@ -92,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
             // launch pick wallpaper
             buttonPickWallpaper.setOnClickListener {
-                launchPickWallpaper()
+                launchPickWallpaper(wallpaperResultLauncher)
             }
 
             // set recycler
@@ -127,9 +133,30 @@ class MainActivity : AppCompatActivity() {
         startActivity(settingsIntent)
     }
 
-    private fun launchPickWallpaper() {
-        val widgetsIntent = Intent(Intent.ACTION_SET_WALLPAPER)
-        startActivity(widgetsIntent)
+    /**
+     * Use ActivityResultLauncher in [launchPickWallpaper] to pick a wallpaper
+     */
+    private fun wallPaperStartForResult(): ActivityResultLauncher<Intent> {
+        return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intent: Intent? = result.data
+                val resultData = intent?.data
+                resultData?.let {
+                    binding.backgroundScreen.setImageURI(it)
+                }
+            }
+        }
+    }
+
+    private fun launchPickWallpaper(startForResult: ActivityResultLauncher<Intent>) {
+//        val wallpaperIntent = Intent(Intent.ACTION_SET_WALLPAPER)
+//        startActivity(wallpaperIntent)
+
+        Intent(Intent.ACTION_GET_CONTENT).also {
+            it.type = "image/*"
+            startForResult.launch(it)
+        }
+
     }
 
     /**
