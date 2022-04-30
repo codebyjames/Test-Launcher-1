@@ -16,4 +16,5 @@ I may post a part two using a WidgetHost to arrange widgets inside of the app, b
 
 ** side note - you can use a ViewPager to host fragments for your launcher screens
 
-
+![alt text](https://github.com/codebyjames/Test-Launcher-1/blob/main/screenshot_launcher.jpg)
+![alt text](https://github.com/codebyjames/Test-Launcher-1/blob/main/screenshot_widget.jpg)
