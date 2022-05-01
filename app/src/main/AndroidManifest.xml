@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.loboda.james.testlauncher1">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
     <uses-permission android:name="android.permission.queries" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"

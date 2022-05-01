@@ -1,6 +1,8 @@
 package com.loboda.james.testlauncher1
 
+import android.Manifest
 import android.app.Activity
+import android.app.WallpaperManager
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
@@ -12,12 +14,12 @@ import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.loboda.james.testlauncher1.adapters.AppDrawerAdapter
 import com.loboda.james.testlauncher1.broadcasts.ColorBroadcast
 import com.loboda.james.testlauncher1.databinding.ActivityMainBinding
 import com.loboda.james.testlauncher1.models.PackageItem
-import com.loboda.james.testlauncher1.widgets.ACTION_DUMMY
 import com.loboda.james.testlauncher1.widgets.ACTION_ONCLICK_COLOR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,6 +37,7 @@ const val CHROME_PACKAGE = "com.android.chrome"
 
 // this is just an app of mine
 const val IDEA_PACKAGE = "com.loboda.james.ideageneratoreye"
+
 class MainActivity : AppCompatActivity() {
 
     /**
@@ -71,8 +74,8 @@ class MainActivity : AppCompatActivity() {
             appDrawerAdapter.submitList(appDrawerList())
         }
 
-        // wallpaper start for result
-        val wallpaperResultLauncher = wallPaperStartForResult()
+        // wallpaper start for result: if getting image from gallery, instead of Wallpaper Manager
+//        val wallpaperResultLauncher = wallPaperStartForResult()
 
         binding.apply {
 
@@ -99,7 +102,11 @@ class MainActivity : AppCompatActivity() {
 
             // launch pick wallpaper
             buttonPickWallpaper.setOnClickListener {
-                launchPickWallpaper(wallpaperResultLauncher)
+                // wallpaper start for result: if getting image from gallery, instead of Wallpaper Manager
+//                launchPickWallpaper(wallpaperResultLauncher)
+
+                // pick wallpaper via Wallpaper Action, then updating background image with the current wallpaper onPostResume()
+                launchPickWallpaper()
             }
 
             // set recycler
@@ -120,7 +127,8 @@ class MainActivity : AppCompatActivity() {
     private fun setWidgetBroadcastOnClick() {
         val broadcast = ColorBroadcast()
         IntentFilter(ACTION_ONCLICK_COLOR).also {
-            registerReceiver(broadcast, it) }
+            registerReceiver(broadcast, it)
+        }
     }
 
     private fun launchSettings() {
@@ -135,6 +143,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Use ActivityResultLauncher in [launchPickWallpaper] to pick a wallpaper
+     * - get image, then set image as background
      */
     private fun wallPaperStartForResult(): ActivityResultLauncher<Intent> {
         return registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -148,6 +157,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Set wallpaper by getting an image using an Activity Result
+     */
     private fun launchPickWallpaper(startForResult: ActivityResultLauncher<Intent>) {
 
         Intent(Intent.ACTION_GET_CONTENT).also {
@@ -155,6 +167,40 @@ class MainActivity : AppCompatActivity() {
             startForResult.launch(it)
         }
 
+    }
+
+    /**
+     * Set wallpaper using Wallpaper Action
+     */
+    private fun launchPickWallpaper() {
+        Intent(Intent.ACTION_SET_WALLPAPER).also {
+            startActivity(it)
+        }
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+
+        // update the wallpaper if permission is granted
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // request permissions
+            val permissionsNeeded = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            ActivityCompat.requestPermissions(this, permissionsNeeded, 0)
+        }
+
+        val currentWallpaper = WallpaperManager.getInstance(this).drawable
+
+        // only update if wallpaper has changed
+        binding.apply {
+            if (backgroundScreen.drawable != currentWallpaper) {
+                binding.backgroundScreen.setImageDrawable(currentWallpaper)
+            }
+        }
     }
 
     /**
@@ -190,9 +236,13 @@ class MainActivity : AppCompatActivity() {
 //                Log.d("Stuff", "system app")
             } else {
 //                Log.d("Stuff", "non system app")
-                list.add(PackageItem(appInfo.packageName, appInfo.icon,
-                    appInfo.loadIcon(packageManager), appInfo.uid,
-                    appInfo.loadLabel(packageManager).toString()))
+                list.add(
+                    PackageItem(
+                        appInfo.packageName, appInfo.icon,
+                        appInfo.loadIcon(packageManager), appInfo.uid,
+                        appInfo.loadLabel(packageManager).toString()
+                    )
+                )
             }
         }
 
