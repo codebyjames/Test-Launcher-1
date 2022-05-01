@@ -1,7 +1,7 @@
 # Test-Launcher-1
 
 
-This project is for anyone learning to use Package Manager, Broadcast Receiver, Widgets, and Launchers!
+This project is for anyone needing working examples of Package Manager, Widget, and Launcher!
 
 In this app you can do the following:
 
