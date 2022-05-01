@@ -1,7 +1,7 @@
 # Test-Launcher-1
 
 
-This project is for anyone needing working examples of Package Manager, Widget, and Launcher!
+This project is for anyone needing working examples of Package Manager, Widget, and Launcher! I did not add the ability to host widgets inside of the launcher itself.
 
 In this app you can do the following:
 
@@ -11,8 +11,6 @@ In this app you can do the following:
 4) pick a launcher
 5) change wallpaper
 6) launch app from installed apps list
-
-I may post a part two using a WidgetHost to arrange widgets inside of the app, but that might be something you should research on your own, so you get experience & satisfaction of figuring out how to implement such features. 
 
 ** side note - you can use a ViewPager to host fragments for your launcher screens
 
